@@ -8,7 +8,7 @@ const userTypeDefs = [
     displayName: String
     bio: String
     image: String
-    books: [Book]
+    books: [GoogleBook]
     friends: [User]
   }
 

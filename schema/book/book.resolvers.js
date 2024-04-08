@@ -9,8 +9,10 @@ const books = [
 
 const bookResolvers = {
   Query: {
-    books: async () => {
-      return books;
+    searchGoogleBooks: async (query) => {
+      return {
+        totalItems: 100,
+      };
     },
   },
 };

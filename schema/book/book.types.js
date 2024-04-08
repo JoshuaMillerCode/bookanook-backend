@@ -1,17 +1,37 @@
 const bookTypeDefs = [
   `
-  type Book {
-    title: String
-    author: String
-    numOfPages: Int
-    publisher: String
-    owner: User!
-    image: String
-    synopsis: String
+  type GoogleBook {
+    id: String!
+    volumeInfo: VolumeInfo!
   }
-
-  type Query {
-    books: [Book]
+  
+  type VolumeInfo {
+    title: String!
+    authors: [String!]
+    publisher: String!
+    publishedDate: String!
+    description: String!
+    imageLinks: ImageLinks!
+    language: String!
+    previewLink: String!
+    infoLink: String!
+  }
+  
+  type ImageLinks {
+    smallThumbnail: String!
+    thumbnail: String!
+  }
+  
+  type SearchBooks {
+    kind: String!
+    totalItems: Int!
+    items: [GoogleBook!]
+  }
+  
+  extend type Query {
+    searchGoogleBooks(
+      query: String!
+    ): SearchBooks
   }
 `,
 ];
