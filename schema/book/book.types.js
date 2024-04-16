@@ -6,20 +6,20 @@ const bookTypeDefs = [
   }
   
   type VolumeInfo {
-    title: String!
-    authors: [String!]
-    publisher: String!
-    publishedDate: String!
-    description: String!
-    imageLinks: ImageLinks!
-    language: String!
-    previewLink: String!
-    infoLink: String!
+    title: String
+    authors: [String]
+    publisher: String
+    publishedDate: String
+    description: String
+    imageLinks: ImageLinks
+    language: String
+    previewLink: String
+    infoLink: String
   }
   
   type ImageLinks {
     smallThumbnail: String!
-    thumbnail: String!
+    thumbnail: String
   }
   
   type SearchBooks {
@@ -31,7 +31,7 @@ const bookTypeDefs = [
   extend type Query {
     searchGoogleBooks(
       query: String!
-    ): SearchBooks
+    ): SearchBooks!
   }
 `,
 ];

@@ -1,11 +1,39 @@
 import express from 'express';
 import helmet from 'helmet';
 import { yoga, yogaRouter } from './config/yogaConfig.js';
+import cors from 'cors';
+import passport from 'passport';
+import cookieSession from 'cookie-session';
 
 const app = express();
 
 // DB Connection
 import './config/db.js';
+
+//Passport Setup
+import './config/passport.js';
+
+//make cookie session
+app.use(
+  cookieSession({
+    name: 'session',
+    keys: ['bookanook'],
+    maxAge: 24 * 60 * 60 * 100,
+  })
+);
+
+//passport setup
+app.use(passport.initialize());
+app.use(passport.session());
+
+//cors setup
+app.use(
+  cors({
+    origin: 'http://localhost',
+    methods: 'GET,POST,PUT,DELETE',
+    credentials: true,
+  })
+);
 
 // By adding the GraphQL Yoga router before the global helmet middleware,
 // you can be sure that the global CSP configuration will not be applied to the GraphQL Yoga endpoint

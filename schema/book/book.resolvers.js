@@ -1,18 +1,9 @@
-const books = [
-  {
-    title: '1984',
-    author: 'George Orwell',
-    numOfPages: 234,
-    publisher: 'Cool Guys',
-  },
-];
+import { searchBooks } from '../../utils/fetchAPI.js';
 
 const bookResolvers = {
   Query: {
-    searchGoogleBooks: async (query) => {
-      return {
-        totalItems: 100,
-      };
+    searchGoogleBooks: async (_, { query }) => {
+      return await searchBooks(query);
     },
   },
 };
