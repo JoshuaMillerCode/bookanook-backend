@@ -3,8 +3,6 @@ import helmet from 'helmet';
 import { yoga, yogaRouter } from './config/yogaConfig.js';
 import cors from 'cors';
 import passport from 'passport';
-// import cookieSession from 'cookie-session';
-// import googleAuthRoutes from './routes/googleAuth.js';
 import localAuthRoutes from './routes/localAuth.js';
 import morgan from 'morgan';
 
@@ -19,17 +17,6 @@ app.use(express.json());
 //Logger Middleware
 app.use(morgan('tiny'));
 
-//===================Work in Progress================================
-//make cookie session
-// app.use(
-//   cookieSession({
-//     name: 'session',
-//     keys: ['bookanook'],
-//     maxAge: 24 * 60 * 60 * 100,
-//   })
-// );
-//===================================================
-
 //cors setup
 app.use(
   cors({
@@ -42,22 +29,11 @@ app.use(
 // //Passport setup
 app.use(passport.initialize());
 
-//===================Work in Progress================================
-// Google Strategy
-// import './services/googlePassport.js';
-//===================================================
-
 // JWT Strategy
 import './services/jwtPassport.js';
-// app.use(passport.session());
 
 // JWT Auth Routes
 app.use('/auth', localAuthRoutes);
-
-//===================Work in Progress================================
-//Google Auth Routes
-// app.use('/auth', googleAuthRoutes);
-//===================================================
 
 // GraphQL endpoint
 app.use(

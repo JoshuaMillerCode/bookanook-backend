@@ -7,7 +7,7 @@ const userSchema = new Schema(
       type: String,
       enum: ['google', 'local'],
     },
-    googleId: String,
+    // googleId: String,
     username: {
       required: true,
       type: String,
