@@ -1,7 +1,5 @@
-import googlePassport from 'passport-google-oauth20';
-
+import googlePassport from 'passport-google-oauth2';
 const GoogleStrategy = googlePassport.Strategy;
-
 import passport from 'passport';
 
 passport.use(
@@ -10,10 +8,17 @@ passport.use(
       clientID: process.env.CLIENT_ID,
       clientSecret: process.env.CLIENT_SECRET,
       callbackURL: '/auth/google/callback',
+      passReqToCallback: true,
       scope: ['profile', 'email'],
     },
-    function (accessToken, refreshToken, profile, callback) {
-      callback(null, profile);
+    function (request, accessToken, refreshToken, profile, done) {
+      //create user with mongoDB
+      // User.findOrCreate({ googleId: profile.id }, function (err, user) {
+      //   return done(err, user);
+      // });
+
+      //for now
+      return done(null, profile);
     }
   )
 );
