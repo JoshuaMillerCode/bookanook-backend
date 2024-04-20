@@ -1,9 +1,8 @@
 const userTypeDefs = [
   `
   type User {
-    id: Int!
+    id: String
     username: String
-    password: String
     age: Int
     displayName: String
     bio: String
@@ -13,8 +12,25 @@ const userTypeDefs = [
   }
 
   type Query {
-    user(id: Int): User
-    hello: String
+    getUser(id: String): User
+  }
+
+  input UpdateUserInput {
+    username: String
+    age: Int
+    displayName: String
+    bio: String
+    image: String
+  }
+
+
+
+  type Mutation {
+    updateUser(id: String!, update: UpdateUserInput): User
+
+    deleteUser(id: String): User
+
+    sendFriendRequest(id: String): User
   }
 `,
 ];

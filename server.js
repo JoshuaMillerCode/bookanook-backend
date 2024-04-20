@@ -38,12 +38,14 @@ app.use('/auth', localAuthRoutes);
 // GraphQL endpoint
 app.use(
   yoga.graphqlEndpoint,
-  passport.authenticate('jwt', { session: false }),
+  process.env.NODE_ENV === "development" ? (_, __, next) => next() : passport.authenticate('jwt', { session: false }),
   yogaRouter
 );
 
 // Add the global CSP configuration for the rest of your server.
 app.use(helmet());
+
+// console.log(process.env.NODE_ENV)
 
 // test route
 app.get(

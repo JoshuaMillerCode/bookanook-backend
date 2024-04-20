@@ -1,18 +1,36 @@
-const users = [
-  { id: 1, username: 'Tom', password: '1234', age: 24 },
-  { id: 2, username: 'Sashko', password: '1234', age: 30 },
-  { id: 3, username: 'Mikhail', password: '1234', age: 50 },
-];
+import User from "./user.model.js";
+import { checkPermission } from "../../utils/checkUserPermission.js";
 
 const userResolvers = {
   Query: {
-    user: async (_, { id }) => {
-      return users.find((u) => u.id === id);
-    },
-    hello: () => {
-      return 'Hello!!!';
+    getUser: async (_, { id }, {user}) => {
+      checkPermission(user, id)
+
+      return await User.findById(id)
     },
   },
+  Mutation: {
+    updateUser: async (_, { id, update }, { user }) => {
+      checkPermission(user, id)
+
+      return await User.findByIdAndUpdate(id, update, { new: true })
+    },
+    deleteUser: async (_, { id }, { user }) => {
+      checkPermission(user, id)
+
+      return await User.findByIdAndDelete(id)
+      
+    },
+    sendFriendRequest: async (_, { id }, { user }) => {
+      checkPermission(user, id)
+
+      // (id is the user friend request recipient )
+    }
+  }
 };
+
+// Send Friend Request 
+
+// Accept Friend Request
 
 export default userResolvers;

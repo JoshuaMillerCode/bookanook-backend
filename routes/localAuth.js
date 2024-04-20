@@ -12,6 +12,7 @@ router.post('/login', login);
 
 async function signup(req, res) {
   try {
+    req.body.role = 'bookworm'
     // Add the user to the database
     const user = await User.create(req.body);
     // generate token

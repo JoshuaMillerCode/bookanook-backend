@@ -1,11 +1,24 @@
 import { Schema, model } from 'mongoose';
 import bcrypt from 'bcrypt';
 
+const FriendRequestSchema = new Schema({
+  requester: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+  recipient: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+  status: {
+    type: Boolean,
+    required: true,
+  },
+});
+
 const userSchema = new Schema(
   {
     provider: {
       type: String,
       enum: ['google', 'local'],
+    },
+    role: {
+      type: String,
+      enum: ['admin', 'bookworm']
     },
     // googleId: String,
     username: {
@@ -23,9 +36,15 @@ const userSchema = new Schema(
     books: [{ type: Schema.Types.ObjectId, ref: 'Book' }],
     friends: [{ type: Schema.Types.ObjectId, ref: 'User' }],
     bookNotes: [{ type: Schema.Types.ObjectId, ref: 'BookNote' }],
+    friendRequests: [FriendRequestSchema],
   },
   {
     timestamps: true,
+    toJSON: {
+      transform: (doc, ret) => {
+        delete ret.password
+      }
+    }
   }
 );
 
