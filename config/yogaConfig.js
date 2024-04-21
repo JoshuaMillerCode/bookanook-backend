@@ -8,7 +8,7 @@ import { extractJWT } from '../utils/extractAndVerifyJWT.js';
 export const yoga = createYoga({
   schema,
   context: async ({ request }) => {
-    return extractJWT(request)
+    return await extractJWT(request)
   } 
 });
 

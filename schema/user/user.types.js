@@ -9,11 +9,23 @@ const userTypeDefs = [
     image: String
     books: [GoogleBook]
     friends: [User]
+    friendRequests: [FriendRequest]
   }
 
-  type Query {
-    getUser(id: String): User
+  type FriendRequest {
+    recipient: String!
+    requester: String!
+    accepted: Boolean
   }
+
+  type FriendRequestReturn {
+    status: String
+    friendRequest: FriendRequest
+  }
+
+  type HandleFriendRequestReturn {
+    message: String
+  } 
 
   input UpdateUserInput {
     username: String
@@ -23,14 +35,23 @@ const userTypeDefs = [
     image: String
   }
 
+  input FriendRequestChoice {
+    requesterId: String!
+    choice: Boolean
+  }
 
+  type Query {
+    getUser(id: String): User
+  }
 
   type Mutation {
-    updateUser(id: String!, update: UpdateUserInput): User
+    updateUser(id: String!, update: UpdateUserInput!): User
 
-    deleteUser(id: String): User
+    deleteUser(id: String!): User
 
-    sendFriendRequest(id: String): User
+    sendFriendRequest(id: String!): FriendRequestReturn
+
+    handleFriendRequest(answer: FriendRequestChoice): HandleFriendRequestReturn
   }
 `,
 ];
