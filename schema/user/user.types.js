@@ -23,7 +23,7 @@ const userTypeDefs = [
     friendRequest: FriendRequest
   }
 
-  type HandleFriendRequestReturn {
+  type MessageReturn {
     message: String
   } 
 
@@ -51,7 +51,9 @@ const userTypeDefs = [
 
     sendFriendRequest(id: String!): FriendRequestReturn
 
-    handleFriendRequest(answer: FriendRequestChoice): HandleFriendRequestReturn
+    handleFriendRequest(answer: FriendRequestChoice): MessageReturn
+
+    removeFriend(id: String): User
   }
 `,
 ];

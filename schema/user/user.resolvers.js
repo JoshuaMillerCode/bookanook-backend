@@ -63,11 +63,9 @@ const userResolvers = {
     },
     handleFriendRequest: async (_, { answer }, { user }) => {
       try {
-        const { requesterId, choice } = answer
-        console.log(requesterId, choice)
-        
+        const { requesterId, choice } = answer        
         const requester = await User.findById(requesterId)
-        // console.log(requester)
+
         if (!requester) {
           throw new GraphQLError("Requester Not Found")
         }
@@ -79,8 +77,6 @@ const userResolvers = {
         if (!foundRequest) {
           throw new GraphQLError("Friend Request Not Found")
         }
-
-        // console.log(foundRequest.recipient.toString() === user._id.toString())
 
         if (choice && foundRequest.recipient.toString() === user._id.toString()) {
           user.friends.push(requester._id)
@@ -110,6 +106,40 @@ const userResolvers = {
 
       } catch (err) {
         throw new GraphQLError(err)
+      }
+    },
+    removeFriend: async (_, { id }, { user }) => {
+      try { 
+
+        const friendBeingRemoved = await User.findById(id)
+
+        if (!friendBeingRemoved) {
+          throw new GraphQLError("User not found")
+        }
+
+        const updatedUser = await User.findByIdAndUpdate(user._id, {
+          $pull: {
+            friends: {
+              $in: [friendBeingRemoved._id]
+            }
+          }
+        }, {
+          new: true
+        })
+
+        await User.findByIdAndUpdate(id, {
+          $pull: {
+            friends: {
+              $in: [user._id]
+            }
+          }
+        }, {
+          new: true
+        })
+
+        return await updatedUser.populate("friends")
+      } catch (err) {
+        throw new GraphQLError(err.message)
       }
     }
   }
